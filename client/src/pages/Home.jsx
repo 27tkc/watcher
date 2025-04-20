@@ -19,7 +19,7 @@ const Home = ({ type }) => {
         const res = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/videos/${type || ""}`
         );
-        console.log("📦 API response:", res.data);
+        // console.log("📦 API response:", res.data);
         if (Array.isArray(res.data)) {
           setVideos(res.data);
         } else {
