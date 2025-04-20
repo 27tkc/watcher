@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Video from "./pages/Video";
 import SignIn from "./pages/SignIn";
+import VideoNotFound from "./pages/VideoNotFound";
 
 const Container = styled.div`
   display: flex;
@@ -37,6 +38,7 @@ function App() {
                     <Route path=":id" element={<Video />} />
                   </Route>
                 </Route>
+                <Route path="/video-not-found" element={<VideoNotFound />} />
               </Routes>
             </Wrapper>
           </Main>

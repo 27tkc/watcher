@@ -21,7 +21,7 @@ router.delete("/:id", verifyToken, addVideo);
 router.get("/find/:id", getVideo);
 router.put("/view/:id", addView);
 router.get("/trend", trend);
-router.get("/random", random);
+router.get("/", random);
 router.get("/sub", verifyToken, sub);
 router.get("/tags", getByTag);
 router.get("/search", search);

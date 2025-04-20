@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import Watcher from "../img/logo.png";
 import HomeIcon from "@mui/icons-material/Home";
@@ -17,6 +18,9 @@ import FlagOutlinedIcon from "@mui/icons-material/FlagOutlined";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 import SettingsBrightnessOutlinedIcon from "@mui/icons-material/SettingsBrightnessOutlined";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { logout } from "../redux/userSlice";
 
 const Container = styled.div`
   flex: 1;
@@ -28,37 +32,35 @@ const Container = styled.div`
   top: 0;
 `;
 const Wrapper = styled.div`
-  padding: 2px 26px 18px 26px;
+  padding: 5px 26px 0px 26px;
 `;
 const Logo = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-weight: 600;
-  margin-bottom: 10px;
-  font-size: 20px;
-  letter-spacing: 1px;
-  text-shadow: 5px 5px 10px #720e9e;
 `;
+
 const Img = styled.img`
-  height: 80px;
+  height: 100px;
 `;
+
 const Item = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
   cursor: pointer;
-  padding: 7.5px 0px;
+  padding: 8px;
 
   &:hover {
     background-color: ${({ theme }) => theme.soft};
   }
 `;
+
 const Hr = styled.hr`
   margin: 15px 0px;
   border: 0.5px solid ${({ theme }) => theme.soft};
 `;
+
 const Login = styled.div``;
 const Button = styled.button`
   padding: 5px 15px;
@@ -73,30 +75,62 @@ const Button = styled.button`
   align-items: center;
   gap: 5px;
 `;
+const LogoutButton = styled.button`
+  padding: 5px 15px;
+  background-color: transparent;
+  border: 1px solid #ff3e3e;
+  color: #ff3e3e;
+  border-radius: 3px;
+  font-weight: 500;
+  margin-top: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`;
 
-function Menu({ darkMode, setDarkMode }) {
+const Menu = ({ darkMode, setDarkMode }) => {
+  const { currentUser } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleSignOut = async (e) => {
+    try {
+      e.preventDefault();
+      dispatch(logout());
+      navigate("/");
+    } catch (err) {
+      console.error("Signup Error:", err);
+    }
+  };
+
   return (
     <Container>
       <Wrapper>
         <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
           <Logo>
             <Img src={Watcher} />
-            Watcher
           </Logo>
+          <Item>
+            <HomeIcon />
+            Home
+          </Item>
         </Link>
-        <Item>
-          <HomeIcon />
-          Home
-        </Item>
-        <Item>
-          <ExploreOutlinedIcon />
-          Explore
-        </Item>
-        <Item>
-          <SubscriptionsOutlinedIcon />
-          Subscriptions
-        </Item>
-        <Hr />
+
+        {/* <Link to="trends" style={{ textDecoration: "none", color: "inherit" }}>
+          <Item>
+            <ExploreOutlinedIcon />
+            Explore
+          </Item>
+        </Link> */}
+        <Link
+          to="subscriptions"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <Item>
+            <SubscriptionsOutlinedIcon />
+            Subscriptions
+          </Item>
+        </Link>
         <Item>
           <VideoLibraryOutlinedIcon />
           Library
@@ -105,16 +139,6 @@ function Menu({ darkMode, setDarkMode }) {
           <HistoryOutlinedIcon />
           History
         </Item>
-        <Hr />
-        <Login>
-          Sign in to like videos, comment, and subscribe.
-          <Link to="signin" style={{ textDecoration: "none" }}>
-            <Button>
-              <AccountCircleOutlinedIcon />
-              SIGN IN
-            </Button>
-          </Link>
-        </Login>
         <Hr />
         <Item>
           <LibraryMusicOutlinedIcon />
@@ -157,9 +181,33 @@ function Menu({ darkMode, setDarkMode }) {
           <SettingsBrightnessOutlinedIcon />
           {darkMode ? "Light" : "Dark"} Mode
         </Item>
+        <Hr />
+        {currentUser && (
+          <>
+            <Login onClick={handleSignOut}>
+              <LogoutButton>
+                <AccountCircleOutlinedIcon />
+                SIGN OUT
+              </LogoutButton>
+            </Login>
+          </>
+        )}
+        {!currentUser && (
+          <>
+            <Login>
+              Sign in to like videos, comment, and subscribe.
+              <Link to="signin" style={{ textDecoration: "none" }}>
+                <Button>
+                  <AccountCircleOutlinedIcon />
+                  SIGN IN
+                </Button>
+              </Link>
+            </Login>
+          </>
+        )}
       </Wrapper>
     </Container>
   );
-}
+};
 
 export default Menu;
