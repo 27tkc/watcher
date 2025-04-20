@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { timeAgo } from "../utils/TimeAgo";
+import UserImg from "../img/user.png";
 
 const Container = styled.div`
   width: ${(props) => props.type !== "sm" && "360px"};
@@ -71,7 +72,7 @@ const Card = ({ type, video }) => {
       <Container type={type}>
         <Image type={type} src={video.imgUrl} />
         <Details type={type}>
-          <ChannelImage type={type} src={channel.img} />
+          <ChannelImage type={type} src={channel.img ? channel.img : UserImg} />
           <Texts>
             <Title>{video.title}</Title>
             <ChannelName>{channel.name}</ChannelName>
