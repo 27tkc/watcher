@@ -50,6 +50,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "http://watcher-production-4047.up.railway.app/api/"
+  }
 }

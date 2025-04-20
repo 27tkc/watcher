@@ -11,7 +11,9 @@ const Recommendation = ({ tags }) => {
   const [videos, setVideos] = useState([]);
   useEffect(() => {
     const fetchVideos = async () => {
-      const res = await axios.get(`/videos/tags?tags=${tags}`);
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/videos/tags?tags=${tags}`
+      );
       setVideos(res.data);
     };
     fetchVideos();
