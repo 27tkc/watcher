@@ -6,7 +6,7 @@ import videoRoutes from "./routes/videos.js";
 import commentRoutes from "./routes/comments.js";
 import authRoutes from "./routes/auth.js";
 import cookieParser from "cookie-parser";
-import cors from "cors"; // ✅ use import instead of require (you're using ES modules)
+import cors from "cors";
 
 dotenv.config();
 
