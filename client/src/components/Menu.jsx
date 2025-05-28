@@ -23,16 +23,16 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../redux/userSlice";
 
 const Container = styled.div`
-  flex: 1;
+  width: 10rem;
   background-color: ${({ theme }) => theme.bgLighter};
   height: 100vh;
   color: ${({ theme }) => theme.text};
-  font-size: 14px;
+  font-size: 12px;
   position: sticky;
   top: 0;
 `;
 const Wrapper = styled.div`
-  padding: 5px 26px 0px 26px;
+  padding: 5px 10px 5px 10px;
 `;
 const Logo = styled.div`
   display: flex;
@@ -41,15 +41,15 @@ const Logo = styled.div`
 `;
 
 const Img = styled.img`
-  height: 100px;
+  height: 50px;
 `;
 
 const Item = styled.div`
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
   cursor: pointer;
-  padding: 8px;
+  padding: 5px;
 
   &:hover {
     background-color: ${({ theme }) => theme.soft};
@@ -57,32 +57,32 @@ const Item = styled.div`
 `;
 
 const Hr = styled.hr`
-  margin: 15px 0px;
+  margin: 5px 0px;
   border: 0.5px solid ${({ theme }) => theme.soft};
 `;
 
 const Login = styled.div``;
 const Button = styled.button`
-  padding: 5px 15px;
+  padding: 2px 5px;
   background-color: transparent;
   border: 1px solid #3ea6ff;
   color: #3ea6ff;
   border-radius: 3px;
-  font-weight: 500;
-  margin-top: 10px;
+  font-weight: 400;
+  margin-top: 5px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 5px;
 `;
 const LogoutButton = styled.button`
-  padding: 5px 15px;
+  padding: 2px 5px;
   background-color: transparent;
   border: 1px solid #ff3e3e;
   color: #ff3e3e;
   border-radius: 3px;
-  font-weight: 500;
-  margin-top: 10px;
+  font-weight: 400;
+  margin-top: 5px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -159,10 +159,6 @@ const Menu = ({ darkMode, setDarkMode }) => {
         <Item>
           <ArticleOutlinedIcon />
           News
-        </Item>
-        <Item>
-          <LiveTvOutlinedIcon />
-          Live
         </Item>
         <Hr />
         <Item>

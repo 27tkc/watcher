@@ -12,7 +12,8 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   background-color: ${({ theme }) => theme.bgLighter};
-  height: 56px;
+  height: 50px;
+  width: 100%;
 `;
 
 const Wrapper = styled.div`
@@ -25,7 +26,7 @@ const Wrapper = styled.div`
 `;
 
 const Search = styled.div`
-  width: 40%;
+  width: 50%;
   position: absolute;
   left: 0px;
   right: 0px;
@@ -47,12 +48,12 @@ const Input = styled.input`
 `;
 
 const Button = styled.button`
-  padding: 5px 15px;
+  padding: 2px 5px;
   background-color: transparent;
   border: 1px solid #3ea6ff;
   color: #3ea6ff;
   border-radius: 3px;
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -68,8 +69,8 @@ const User = styled.div`
 `;
 
 const Avatar = styled.img`
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   background-color: #999;
 `;

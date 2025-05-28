@@ -6,30 +6,30 @@ import { timeAgo } from "../utils/TimeAgo";
 import UserImg from "../img/user.png";
 
 const Container = styled.div`
-  width: ${(props) => props.type !== "sm" && "360px"};
-  margin-bottom: ${(props) => (props.type === "sm" ? "10px" : "45px")};
+  width: ${(props) => props.type !== "sm" && "260px"};
+  margin-bottom: ${(props) => (props.type === "sm" ? "10px" : "20px")};
   cursor: pointer;
   display: ${(props) => props.type === "sm" && "flex"};
-  gap: 10px;
+  gap: 5px;
 `;
 
 const Image = styled.img`
-  width: ${(props) => (props.type === "sm" ? "160px" : "100%")};
-  height: ${(props) => (props.type === "sm" ? "100px" : "202px")};
+  width: ${(props) => (props.type === "sm" ? "180px" : "250px")};
+  height: ${(props) => (props.type === "sm" ? "100px" : "150px")};
   background-color: #999;
   flex: 1;
 `;
 
 const Details = styled.div`
   display: flex;
-  margin-top: ${(props) => props.type !== "sm" && "16px"};
-  gap: 12px;
+  margin-top: ${(props) => props.type !== "sm" && "5px"};
+  gap: 5px;
   flex: 1;
 `;
 
 const ChannelImage = styled.img`
-  width: 36px;
-  height: 36px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background-color: #999;
   display: ${(props) => props.type === "sm" && "none"};
@@ -38,19 +38,19 @@ const ChannelImage = styled.img`
 const Texts = styled.div``;
 
 const Title = styled.h1`
-  font-size: 16px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 400;
   color: ${({ theme }) => theme.text};
 `;
 
 const ChannelName = styled.h2`
-  font-size: 14px;
+  font-size: 10px;
   color: ${({ theme }) => theme.textSoft};
-  margin: 9px 0px;
+  margin: 2px 0px;
 `;
 
 const Info = styled.div`
-  font-size: 14px;
+  font-size: 10px;
   color: ${({ theme }) => theme.textSoft};
 `;
 

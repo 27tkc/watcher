@@ -11,13 +11,14 @@ import VideoNotFound from "./pages/VideoNotFound";
 
 const Container = styled.div`
   display: flex;
+  overflow-x: hidden;
 `;
 const Main = styled.div`
-  flex: 7;
+  width: 100%;
   background-color: ${({ theme }) => theme.bg};
 `;
 const Wrapper = styled.div`
-  padding: 50px;
+  padding: 20px;
 `;
 
 function App() {

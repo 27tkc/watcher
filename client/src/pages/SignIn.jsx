@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { loginFailure, loginStart, loginSuccess } from "../redux/userSlice";
 import { auth, provider } from "../firebase";
 import { signInWithPopup } from "firebase/auth";
-import { async } from "@firebase/util";
 import Google from "../img/google.png";
 
 const Container = styled.div`
@@ -14,28 +13,47 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   color: ${({ theme }) => theme.text};
+  border: 1px solid ${({ theme }) => theme.soft};
+  background-color: ${({ theme }) => theme.bgLighter};
+  border-radius: 10px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  width: 70%;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+  margin-left: 11rem;
 `;
 
 const Wrapper = styled.div`
   display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  padding: 10px;
+`;
+
+const Section = styled.div`
+  flex: 1;
+  padding: 20px 10px;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${({ theme }) => theme.bgLighter};
-  backdrop-filter: blur(10px);
-  border: 1px solid ${({ theme }) => theme.soft};
-  border-radius: 10px;
-  padding: 40px 60px;
   gap: 20px;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  max-width: 400px;
-  width: 90%;
+`;
+
+const Divider = styled.div`
+  width: 1px;
+  background-color: ${({ theme }) => theme.soft};
+  margin: 0px 100px 0px 100px;
+`;
+
+const OthersDiv = styled.div`
+  margin-top: 30px;
+  text-align: center;
 `;
 
 const Title = styled.h1`
-  font-size: 28px;
-  font-weight: 600;
+  font-size: 25px;
+  font-weight: 400;
   color: ${({ theme }) => theme.text};
 `;
 
@@ -79,8 +97,15 @@ const Button = styled.button`
   }
 `;
 
+const GoogleImg = styled.img`
+  height: 100px;
+  cursor: pointer;
+  margin-top: 20px;
+`;
+
 const More = styled.div`
   display: flex;
+  justify-content: center;
   margin-top: 10px;
   font-size: 12px;
   color: ${({ theme }) => theme.textSoft};
@@ -92,11 +117,6 @@ const Links = styled.div`
 
 const Link = styled.span`
   margin-left: 30px;
-`;
-
-const GoogleImg = styled.img`
-  height: 100px;
-  cursor: pointer;
 `;
 
 const SignIn = () => {
@@ -120,6 +140,7 @@ const SignIn = () => {
       dispatch(loginFailure());
     }
   };
+
   const handleSignUp = async (e) => {
     e.preventDefault();
     dispatch(loginStart());
@@ -151,12 +172,11 @@ const SignIn = () => {
             img: result.user.photoURL,
           })
           .then((res) => {
-            console.log(res);
             dispatch(loginSuccess(res.data));
             navigate("/");
           });
       })
-      .catch((error) => {
+      .catch(() => {
         dispatch(loginFailure());
       });
   };
@@ -164,41 +184,53 @@ const SignIn = () => {
   return (
     <Container>
       <Wrapper>
-        <Title>Sign in</Title>
-        <SubTitle>to continue to Watcher</SubTitle>
-        <Input
-          placeholder="username"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <Input
-          type="password"
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button onClick={handleLogin}>Sign in</Button>
-        <Title>Sign up</Title>
-        <Input
-          placeholder="username"
-          onChange={(e) => setName(e.target.value)}
-        />
-        <Input placeholder="email" onChange={(e) => setEmail(e.target.value)} />
-        <Input
-          type="password"
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button onClick={handleSignUp}>Sign up</Button>
+        <Section>
+          <Title>Sign In</Title>
+          <Input
+            placeholder="username"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button onClick={handleLogin}>Sign in</Button>
+        </Section>
+
+        <Divider />
+
+        <Section>
+          <Title>Sign Up</Title>
+          <Input
+            placeholder="username"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Input
+            placeholder="email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="password"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button onClick={handleSignUp}>Sign up</Button>
+        </Section>
+      </Wrapper>
+
+      <OthersDiv>
         <Title>or</Title>
         <GoogleImg src={Google} onClick={signInWithGoogle} />
-      </Wrapper>
-      <More>
-        English(USA)
-        <Links>
-          <Link>Help</Link>
-          <Link>Privacy</Link>
-          <Link>Terms</Link>
-        </Links>
-      </More>
+        <More>
+          English (USA)
+          <Links>
+            <Link>Help</Link>
+            <Link>Privacy</Link>
+            <Link>Terms</Link>
+          </Links>
+        </More>
+      </OthersDiv>
     </Container>
   );
 };
