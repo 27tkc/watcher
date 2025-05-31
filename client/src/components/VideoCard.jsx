@@ -8,6 +8,7 @@ const Card = styled.div`
   border-radius: 12px;
   overflow: hidden;
   background-color: #999;
+  color: ${({ theme }) => theme.text};
 `;
 
 const Img = styled.img`
@@ -28,6 +29,7 @@ const Buttons = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  gap: 5px;
 `;
 
 const Btn = styled.button`
@@ -37,6 +39,7 @@ const Btn = styled.button`
   border: none;
   cursor: pointer;
   border-radius: 6px;
+  width: 100%;
 `;
 
 const VideoCard = ({ video, onDelete }) => {
