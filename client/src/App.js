@@ -15,6 +15,7 @@ const Container = styled.div`
   overflow-x: hidden;
   background-color: ${({ theme }) => theme.bg};
   height: 100vh;
+  color: ${({ theme }) => theme.text};
 `;
 const Main = styled.div`
   width: 100%;

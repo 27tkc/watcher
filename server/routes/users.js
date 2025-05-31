@@ -9,6 +9,7 @@ import {
   dislike,
   activatePremium,
   deactivatePremium,
+  getUserVideos,
 } from "../controllers/user.js";
 import { verifyToken } from "../verifyToken.js";
 
@@ -40,5 +41,8 @@ router.put("/premiumactivate/:id", verifyToken, activatePremium);
 
 //premium account deactivate
 router.put("/premiumdeactivate/:id", verifyToken, deactivatePremium);
+
+//to get videos uploaded by a user
+router.get("/videos/:id", getUserVideos);
 
 export default router;
