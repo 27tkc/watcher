@@ -52,8 +52,6 @@ const Title = styled.h3`
 const Button = styled.button`
   margin-top: 15px;
   padding: 10px 20px;
-  background-color: ${({ isPremium, theme }) =>
-    isPremium ? "#ff4d4f" : "#4caf50"};
   color: white;
   border: none;
   border-radius: 8px;
@@ -61,9 +59,9 @@ const Button = styled.button`
   width: fit-content;
   font-weight: 500;
   transition: background-color 0.3s;
-
+  background-color: ${({ $premium }) => ($premium ? "#ff4d4f" : "#4caf50")};
   &:hover {
-    background-color: ${({ isPremium }) => (isPremium ? "#e04344" : "#43a047")};
+    background-color: ${({ $premium }) => ($premium ? "#e04344" : "#43a047")};
   }
 `;
 
@@ -88,6 +86,7 @@ const Settings = () => {
         const res = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/users/videos/${currentUser._id}`
         );
+        console.log(res.data);
         setVideos(res.data);
       } catch (err) {
         console.error("Error fetching videos", err);
@@ -122,6 +121,7 @@ const Settings = () => {
       console.error("Failed to toggle premium status", err);
     }
   };
+  const premiumStatus = currentUser?.isPremium;
 
   return (
     <Container>
@@ -143,10 +143,8 @@ const Settings = () => {
             <Label>
               <strong>Premium:</strong> {currentUser?.isPremium ? "Yes" : "No"}
             </Label>
-            <Button isPremium={currentUser?.isPremium} onClick={togglePremium}>
-              {currentUser?.isPremium
-                ? "Deactivate Premium 🥲"
-                : "Buy Premium ✨"}
+            <Button $premium={premiumStatus} onClick={togglePremium}>
+              {premiumStatus ? "Deactivate Premium 🥲" : "Buy Premium ✨"}
             </Button>
           </Info>
         </UserInfo>

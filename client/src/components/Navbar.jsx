@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 `;
 
 const Search = styled.div`
-  width: 50%;
+  width: 30%;
   position: absolute;
   left: 0px;
   right: 0px;
@@ -96,7 +96,6 @@ const Navbar = () => {
             <User>
               <VideoCallOutlinedIcon onClick={() => setOpen(true)} />
               <Avatar src={currentUser.img ? currentUser.img : UserImg} />
-              {currentUser.name}
             </User>
           ) : (
             <Link to="signin" style={{ textDecoration: "none" }}>
