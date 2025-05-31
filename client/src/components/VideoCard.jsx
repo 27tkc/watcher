@@ -7,7 +7,7 @@ const Card = styled.div`
   border: 1px solid #ddd;
   border-radius: 12px;
   overflow: hidden;
-  background-color: #fff;
+  background-color: #999;
 `;
 
 const Img = styled.img`
@@ -31,8 +31,8 @@ const Buttons = styled.div`
 `;
 
 const Btn = styled.button`
-  background-color: ${(props) => (props.delete ? "#e74c3c" : "#3498db")};
-  color: #fff;
+  background-color: ${({ theme }) => theme.soft};
+  color: ${({ theme }) => theme.textSoft};
   padding: 5px 10px;
   border: none;
   cursor: pointer;
@@ -49,9 +49,7 @@ const VideoCard = ({ video, onDelete }) => {
         <Title>{video.title}</Title>
         <Buttons>
           <Btn onClick={() => navigate(`/edit-video/${video._id}`)}>Edit</Btn>
-          <Btn delete onClick={() => onDelete(video._id)}>
-            Delete
-          </Btn>
+          <Btn onClick={() => onDelete(video._id)}>Delete</Btn>
         </Buttons>
       </Info>
     </Card>
