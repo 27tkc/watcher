@@ -34,7 +34,7 @@ const Buttons = styled.div`
 
 const Btn = styled.button`
   background-color: ${({ theme }) => theme.soft};
-  color: ${({ theme }) => theme.textSoft};
+  color: ${({ theme }) => theme.text};
   padding: 5px 10px;
   border: none;
   cursor: pointer;
