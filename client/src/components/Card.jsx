@@ -6,7 +6,7 @@ import { timeAgo } from "../utils/TimeAgo";
 import UserImg from "../img/user.png";
 
 const Container = styled.div`
-  width: ${(props) => props.type !== "sm" && "260px"};
+  width: ${(props) => props.type !== "sm" && "320px"};
   margin-bottom: ${(props) => (props.type === "sm" ? "10px" : "20px")};
   cursor: pointer;
   display: ${(props) => props.type === "sm" && "flex"};
@@ -14,8 +14,8 @@ const Container = styled.div`
 `;
 
 const Image = styled.img`
-  width: ${(props) => (props.type === "sm" ? "180px" : "250px")};
-  height: ${(props) => (props.type === "sm" ? "100px" : "150px")};
+  width: ${(props) => (props.type === "sm" ? "180px" : "310px")};
+  height: ${(props) => (props.type === "sm" ? "100px" : "200px")};
   background-color: #999;
   flex: 1;
 `;

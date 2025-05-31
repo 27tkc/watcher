@@ -7,6 +7,8 @@ import {
   unsubscribe,
   like,
   dislike,
+  activatePremium,
+  deactivatePremium,
 } from "../controllers/user.js";
 import { verifyToken } from "../verifyToken.js";
 
@@ -32,5 +34,11 @@ router.put("/like/:videoId", verifyToken, like);
 
 //dislike a video
 router.put("/dislike/:videoId", verifyToken, dislike);
+
+//premium account activate
+router.put("/premiumactivate/:id", verifyToken, activatePremium);
+
+//premium account deactivate
+router.put("/premiumdeactivate/:id", verifyToken, deactivatePremium);
 
 export default router;

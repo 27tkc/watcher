@@ -64,7 +64,8 @@ const User = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  font-weight: 500;
+  font-weight: 300;
+  font-size: small;
   color: ${({ theme }) => theme.text};
 `;
 

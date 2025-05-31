@@ -8,10 +8,13 @@ import Home from "./pages/Home";
 import Video from "./pages/Video";
 import SignIn from "./pages/SignIn";
 import VideoNotFound from "./pages/VideoNotFound";
+import Settings from "./pages/Settings";
 
 const Container = styled.div`
   display: flex;
   overflow-x: hidden;
+  background-color: ${({ theme }) => theme.bg};
+  height: 100vh;
 `;
 const Main = styled.div`
   width: 100%;
@@ -38,6 +41,7 @@ function App() {
                   <Route path="video">
                     <Route path=":id" element={<Video />} />
                   </Route>
+                  <Route path="settings" element={<Settings />} />
                 </Route>
                 <Route path="/video-not-found" element={<VideoNotFound />} />
               </Routes>

@@ -67,6 +67,10 @@ const Hr = styled.hr`
 const Channel = styled.div`
   display: flex;
   justify-content: space-between;
+  background-color: ${({ theme }) => theme.bgLighter};
+  padding: 15px;
+  border-radius: 5px;
+  margin: 15px 0px 15px 0px;
 `;
 
 const ChannelInfo = styled.div`
@@ -83,7 +87,6 @@ const Image = styled.img`
 const ChannelDetail = styled.div`
   display: flex;
   flex-direction: column;
-  color: ${({ theme }) => theme.text};
 `;
 
 const ChannelName = styled.span`
@@ -209,7 +212,6 @@ const Video = () => {
                 </Button>
               </Buttons>
             </Details>
-            <Hr />
             <Channel>
               <ChannelInfo>
                 <Image src={channel.img ? channel.img : UserImg} />
@@ -227,7 +229,6 @@ const Video = () => {
                   : "SUBSCRIBE"}
               </Subscribe>
             </Channel>
-            <Hr />
             <Comments videoId={currentVideo._id} />
           </Content>
           <Recommendation tags={currentVideo.tags} />

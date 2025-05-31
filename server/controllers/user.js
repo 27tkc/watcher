@@ -102,3 +102,25 @@ export const dislike = async (req, res, next) => {
     next(err);
   }
 };
+
+export const activatePremium = async (req, res, next) => {
+  try {
+    await User.findByIdAndUpdate(req.user.id, {
+      $set: { isPremium: true },
+    });
+    res.status(200).json("Premium account activated.");
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const deactivatePremium = async (req, res, next) => {
+  try {
+    await User.findByIdAndUpdate(req.user.id, {
+      $set: { isPremium: false },
+    });
+    res.status(200).json("Premium account deactivated.");
+  } catch (err) {
+    next(err);
+  }
+};

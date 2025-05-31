@@ -25,11 +25,12 @@ import { logout } from "../redux/userSlice";
 const Container = styled.div`
   width: 10rem;
   background-color: ${({ theme }) => theme.bgLighter};
-  height: 100vh;
+  height: 100%;
   color: ${({ theme }) => theme.text};
   font-size: 12px;
   position: sticky;
   top: 0;
+  border-right: 1px solid ${({ theme }) => theme.soft};
 `;
 const Wrapper = styled.div`
   padding: 5px 10px 5px 10px;
@@ -135,10 +136,10 @@ const Menu = ({ darkMode, setDarkMode }) => {
           <VideoLibraryOutlinedIcon />
           Library
         </Item>
-        <Item>
+        {/* <Item>
           <HistoryOutlinedIcon />
           History
-        </Item>
+        </Item> */}
         <Hr />
         <Item>
           <LibraryMusicOutlinedIcon />
@@ -161,18 +162,25 @@ const Menu = ({ darkMode, setDarkMode }) => {
           News
         </Item>
         <Hr />
-        <Item>
-          <SettingsOutlinedIcon />
-          Settings
-        </Item>
-        <Item>
+        {currentUser && (
+          <Link
+            to="settings"
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <Item>
+              <SettingsOutlinedIcon />
+              Settings
+            </Item>
+          </Link>
+        )}
+        {/* <Item>
           <FlagOutlinedIcon />
           Report
         </Item>
         <Item>
           <HelpOutlineOutlinedIcon />
           Help
-        </Item>
+        </Item> */}
         <Item onClick={() => setDarkMode(!darkMode)}>
           <SettingsBrightnessOutlinedIcon />
           {darkMode ? "Light" : "Dark"} Mode
