@@ -142,7 +142,7 @@ const Upload = ({ setOpen }) => {
     );
     setOpen(false);
     res.status === 200 &&
-      navigate(`${process.env.REACT_APP_API_URL}/api/video/${res.data._id}`);
+      navigate(`${process.env.REACT_APP_API_URL}/api/videos/${res.data._id}`);
   };
 
   return (
