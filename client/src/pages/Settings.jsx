@@ -86,7 +86,6 @@ const Settings = () => {
         const res = await axios.get(
           `${process.env.REACT_APP_API_URL}/api/users/videos/${currentUser._id}`
         );
-        console.log(res.data);
         setVideos(res.data);
       } catch (err) {
         console.error("Error fetching videos", err);
