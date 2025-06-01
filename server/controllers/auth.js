@@ -28,10 +28,11 @@ export const signin = async (req, res, next) => {
 
     const token = jwt.sign({ id: user._id }, process.env.JWT);
     const { password, ...others } = user._doc;
-
     res
       .cookie("access_token", token, {
         httpOnly: true,
+        sameSite: "None", // ✅ Allows cross-origin cookies
+        secure: true, // ✅ Required when sameSite is "None"
       })
       .status(200)
       .json(others);
@@ -48,6 +49,8 @@ export const googleAuth = async (req, res, next) => {
       res
         .cookie("access_token", token, {
           httpOnly: true,
+          sameSite: "None", // ✅ Allows cross-origin cookies
+          secure: true, // ✅ Required when sameSite is "None"
         })
         .status(200)
         .json(user._doc);
@@ -61,6 +64,8 @@ export const googleAuth = async (req, res, next) => {
       res
         .cookie("access_token", token, {
           httpOnly: true,
+          sameSite: "None", // ✅ Allows cross-origin cookies
+          secure: true, // ✅ Required when sameSite is "None"
         })
         .status(200)
         .json(savedUser._doc);

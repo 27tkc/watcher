@@ -132,7 +132,8 @@ const SignIn = () => {
     try {
       const res = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/auth/signin`,
-        { name, password }
+        { name, password },
+        { withCredentials: true }
       );
       dispatch(loginSuccess(res.data));
       navigate("/");
@@ -151,7 +152,8 @@ const SignIn = () => {
           name,
           email,
           password,
-        }
+        },
+        { withCredentials: true }
       );
       dispatch(loginSuccess(res.data));
       navigate("/");
@@ -166,11 +168,15 @@ const SignIn = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
         axios
-          .post(`${process.env.REACT_APP_API_URL}/api/auth/google`, {
-            name: result.user.displayName,
-            email: result.user.email,
-            img: result.user.photoURL,
-          })
+          .post(
+            `${process.env.REACT_APP_API_URL}/api/auth/google`,
+            {
+              name: result.user.displayName,
+              email: result.user.email,
+              img: result.user.photoURL,
+            },
+            { withCredentials: true }
+          )
           .then((res) => {
             dispatch(loginSuccess(res.data));
             navigate("/");
