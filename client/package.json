@@ -24,7 +24,7 @@
     "redux": "^5.0.1",
     "redux-js": "^1.0.6",
     "redux-persist": "^6.0.0",
-    "stripe": "^18.2.0",
+    "stripe": "^18.2.1",
     "styled-components": "^6.1.17",
     "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.4"

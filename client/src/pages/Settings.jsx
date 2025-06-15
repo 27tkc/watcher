@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../redux/userSlice";
 import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
 import VideoCard from "../components/VideoCard";
 import UserImg from "../img/user.png";
 
@@ -78,6 +81,7 @@ const EmptyState = styled.p`
 
 const Settings = () => {
   const [videos, setVideos] = useState([]);
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -106,20 +110,90 @@ const Settings = () => {
     }
   };
 
-  const togglePremium = async () => {
+  const stripePromise = loadStripe(
+    process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
+  );
+
+  const makePayment = async () => {
     try {
-      await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/users/${
-          currentUser.isPremium ? "premiumdeactivate" : "premiumactivate"
-        }/${currentUser._id}`,
-        {},
+      const stripe = await stripePromise;
+
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/stripe/create-checkout-session`,
+        { userId: currentUser._id },
         { withCredentials: true }
       );
-      window.location.reload();
+
+      const sessionId = res.data.id;
+
+      const result = await stripe.redirectToCheckout({
+        sessionId,
+      });
+
+      if (result.error) {
+        console.error(result.error.message);
+      }
+    } catch (err) {
+      console.error("Stripe Checkout error", err);
+    }
+  };
+
+  const togglePremium = async () => {
+    try {
+      if (currentUser?.isPremium) {
+        // Deactivate premium
+        await axios.put(
+          `${process.env.REACT_APP_API_URL}/api/users/premiumdeactivate/${currentUser._id}`,
+          {},
+          { withCredentials: true }
+        );
+
+        // Fetch updated user data
+        const res = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/users/${currentUser._id}`,
+          { withCredentials: true }
+        );
+        dispatch(loginSuccess(res.data));
+      } else {
+        // Initiate Stripe payment
+        await makePayment();
+      }
     } catch (err) {
       console.error("Failed to toggle premium status", err);
     }
   };
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const paymentSuccess = query.get("payment") === "success";
+    const userId = query.get("userId");
+
+    if (paymentSuccess && userId === currentUser?._id) {
+      const activatePremium = async () => {
+        try {
+          await axios.put(
+            `${process.env.REACT_APP_API_URL}/api/users/premiumactivate/${userId}`,
+            {},
+            { withCredentials: true }
+          );
+
+          // Fetch updated user data
+          const res = await axios.get(
+            `${process.env.REACT_APP_API_URL}/api/users/${userId}`,
+            { withCredentials: true }
+          );
+          dispatch(loginSuccess(res.data));
+
+          // Clean URL to remove query params without reload
+          window.history.replaceState({}, document.title, "/settings");
+        } catch (err) {
+          console.error("Premium activation failed", err);
+        }
+      };
+      activatePremium();
+    }
+  }, [currentUser, dispatch]);
+
   const premiumStatus = currentUser?.isPremium;
 
   return (
