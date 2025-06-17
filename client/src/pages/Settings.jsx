@@ -168,8 +168,8 @@ const Settings = () => {
     const paymentSuccess = query.get("payment") === "success";
     const userId = query.get("userId");
 
-    if (paymentSuccess && userId === currentUser?._id) {
-      const activatePremium = async () => {
+    if (paymentSuccess && userId) {
+      (async () => {
         try {
           await axios.put(
             `${process.env.REACT_APP_API_URL}/api/users/premiumactivate/${userId}`,
@@ -187,12 +187,11 @@ const Settings = () => {
           // Clean URL to remove query params without reload
           window.history.replaceState({}, document.title, "/settings");
         } catch (err) {
-          console.error("Premium activation failed", err);
+          // console.error("Premium activation failed", err);
         }
-      };
-      activatePremium();
+      })();
     }
-  }, [currentUser, dispatch]);
+  }, [dispatch]);
 
   const premiumStatus = currentUser?.isPremium;
 

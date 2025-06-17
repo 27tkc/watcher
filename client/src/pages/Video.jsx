@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { timeAgo } from "../utils/TimeAgo";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
@@ -11,11 +11,9 @@ import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Comments from "../components/Comments";
-import Card from "../components/Card";
+import Recommendation from "../components/Recommendation";
 import { dislike, fetchSuccess, like } from "../redux/videoSlice";
 import { subscription } from "../redux/userSlice";
-import Recommendation from "../components/Recommendation";
-import { useNavigate } from "react-router-dom";
 import UserImg from "../img/user.png";
 
 const Container = styled.div`
@@ -24,7 +22,7 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-  flex: 5;
+  flex: 6;
 `;
 const VideoWrapper = styled.div``;
 
@@ -57,11 +55,6 @@ const Button = styled.div`
   align-items: center;
   gap: 5px;
   cursor: pointer;
-`;
-
-const Hr = styled.hr`
-  margin: 15px 0px;
-  border: 0.5px solid ${({ theme }) => theme.soft};
 `;
 
 const Channel = styled.div`
@@ -130,6 +123,15 @@ const Video = () => {
 
   const [channel, setChannel] = useState({});
 
+  // Helper function to require login for actions
+  const requireAuth = () => {
+    if (!currentUser) {
+      alert("Sign in to like videos, comment, and subscribe.");
+      return false;
+    }
+    return true;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -146,15 +148,17 @@ const Video = () => {
       }
     };
     fetchData();
-  }, [path, dispatch]);
+  }, [path, dispatch, navigate]);
 
   const handleLike = async () => {
+    if (!requireAuth()) return;
     await axios.put(
       `${process.env.REACT_APP_API_URL}/api/users/like/${currentVideo._id}`
     );
     dispatch(like(currentUser._id));
   };
   const handleDislike = async () => {
+    if (!requireAuth()) return;
     await axios.put(
       `${process.env.REACT_APP_API_URL}/api/users/dislike/${currentVideo._id}`
     );
@@ -162,6 +166,7 @@ const Video = () => {
   };
 
   const handleSub = async () => {
+    if (!requireAuth()) return;
     currentUser.subscribedUsers.includes(channel._id)
       ? await axios.put(
           `${process.env.REACT_APP_API_URL}/api/users/unsub/${channel._id}`
@@ -172,7 +177,11 @@ const Video = () => {
     dispatch(subscription(channel._id));
   };
 
-  //TODO: DELETE VIDEO FUNCTIONALITY
+  // For Share and Save buttons, just alert if not signed in, no further logic for now
+  const handleShareOrSave = () => {
+    if (!requireAuth()) return;
+    alert("Feature coming soon!"); // Placeholder for share/save logic
+  };
 
   return (
     <Container>
@@ -180,7 +189,7 @@ const Video = () => {
         <>
           <Content>
             <VideoWrapper>
-              <VideoFrame src={currentVideo.videoUrl} controls />
+              <VideoFrame src={currentVideo.videoUrl} controls autoPlay />
             </VideoWrapper>
             <Title>{currentVideo.title}</Title>
             <Details>
@@ -201,13 +210,12 @@ const Video = () => {
                     <ThumbDownIcon />
                   ) : (
                     <ThumbDownOffAltOutlinedIcon />
-                  )}{" "}
-                  Dislike
+                  )}
                 </Button>
-                <Button>
+                <Button onClick={handleShareOrSave}>
                   <ReplyOutlinedIcon /> Share
                 </Button>
-                <Button>
+                <Button onClick={handleShareOrSave}>
                   <AddTaskOutlinedIcon /> Save
                 </Button>
               </Buttons>
@@ -224,14 +232,14 @@ const Video = () => {
                 </ChannelDetail>
               </ChannelInfo>
               <Subscribe onClick={handleSub}>
-                {currentUser.subscribedUsers?.includes(channel._id)
+                {currentUser?.subscribedUsers?.includes(channel._id)
                   ? "SUBSCRIBED"
                   : "SUBSCRIBE"}
               </Subscribe>
             </Channel>
-            <Comments videoId={currentVideo._id} />
+            <Comments videoId={currentVideo?._id} currentUser={currentUser} />
           </Content>
-          <Recommendation tags={currentVideo.tags} />
+          <Recommendation tags={currentVideo?.tags} />
         </>
       ) : (
         <p style={{ color: "white" }}>Loading video...</p>

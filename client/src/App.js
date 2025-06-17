@@ -9,6 +9,7 @@ import Video from "./pages/Video";
 import SignIn from "./pages/SignIn";
 import VideoNotFound from "./pages/VideoNotFound";
 import Settings from "./pages/Settings";
+import Search from "./pages/Search";
 
 const Container = styled.div`
   display: flex;
@@ -43,6 +44,7 @@ function App() {
                     <Route path=":id" element={<Video />} />
                   </Route>
                   <Route path="settings" element={<Settings />} />
+                  <Route path="search" element={<Search />} />
                 </Route>
                 <Route path="/video-not-found" element={<VideoNotFound />} />
               </Routes>

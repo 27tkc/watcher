@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Upload from "./Upload";
 import UserImg from "../img/user.png";
@@ -44,6 +44,7 @@ const Input = styled.input`
   border: none;
   background-color: transparent;
   outline: none;
+  width: 90%;
   color: ${({ theme }) => theme.text};
 `;
 
@@ -75,12 +76,25 @@ const Avatar = styled.img`
   border-radius: 50%;
   background-color: #999;
 `;
+const StyledSearchIcon = styled(SearchOutlinedIcon)`
+  cursor: pointer;
+  background-color: ${({ theme }) => theme.soft};
+  color: ${({ theme }) => theme.text};
+  padding: 2px;
+  border-radius: 4px;
+`;
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const { currentUser } = useSelector((state) => state.user);
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setQ("");
+    }
+  }, [location.pathname]);
   return (
     <>
       <Container>
@@ -88,9 +102,22 @@ const Navbar = () => {
           <Search>
             <Input
               placeholder="Search"
+              value={q}
               onChange={(e) => setQ(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && q.trim()) {
+                  navigate(`/search?q=${q.trim()}`);
+                }
+              }}
             />
-            <SearchOutlinedIcon onClick={() => navigate(`/search?q=${q}`)} />
+
+            <StyledSearchIcon
+              onClick={() => {
+                if (q.trim()) {
+                  navigate(`/search?q=${q.trim()}`);
+                }
+              }}
+            />
           </Search>
           {currentUser ? (
             <User>
